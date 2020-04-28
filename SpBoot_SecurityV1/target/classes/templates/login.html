@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!--  URL에 th 키워드를 사용하면 rootPath와 관계없이 사용가능하다.-->
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<h2>여기는 loginform</h2>
+
+<!-- 
+	th:href
+	th:action
+	이 속성들은 rootPath를 자동으로 지정해주는 URL을 생성한다.
+	(href나 action을 사용하지 않고 th:를 쓰는 이유임)
+ -->
+<form th:action="@{login}" method="POST">
+<!--  서버에서 보낸 값을 이용하기 위해 th: 키워드를 꼭 붙여야함(th:안쓰면 안됨) -->
+	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+	<div>
+		<label>USER NAME</label>
+		<input name="username">
+	</div>
+	
+	<div>
+		<label>PASSWORD</label>
+		<input name="password" type="password">
+	</div>
+
+	<div>
+		<button>login</button>
+	</div>	
+</form>
+
+</body>
+</html>
