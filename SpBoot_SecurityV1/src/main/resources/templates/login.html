@@ -1,38 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<!--  URL에 th 키워드를 사용하면 rootPath와 관계없이 사용가능하다.-->
-<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+<!--  th:block ==> 전체 html 코드를 한번에 불러오기 -->
+<th:block th:include="include/head" />
+<script>
+$(function(){
+	$(document).on("click", "button", function(){
+		let text = $(this).text()
+		if(text == "JOIN"){
+			document.location.href="/user/join"
+		}
+	})
+	
+})
+
+</script>
 </head>
 <body>
+<nav th:replace="include/layout :: nav" />
 
 <h2>여기는 loginform</h2>
-
 <!-- 
 	th:href
 	th:action
 	이 속성들은 rootPath를 자동으로 지정해주는 URL을 생성한다.
 	(href나 action을 사용하지 않고 th:를 쓰는 이유임)
  -->
+ 
+ <!-- 
+ 	pom.xml에 'thymeleaf-extras-springsecurity5' dependency를 설정해주면 spring form tag처럼 csrf를 쓰지 않아도 csrf토큰이 hidden으로 자동으로 넘어간다.
+ 	(csrf Token을 또 넣어주면 값이 배열로 넘어가 인식 못하므로 또 input 안해줘도 됨) 
+ -->
+ 
 <form th:action="@{login}" method="POST">
 <!--  서버에서 보낸 값을 이용하기 위해 th: 키워드를 꼭 붙여야함(th:안쓰면 안됨) -->
-	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-	<div>
+	<div class="form-group">
 		<label>USER NAME</label>
-		<input name="username">
+		<input class="form-control" name="username">
 	</div>
 	
-	<div>
+	<div class="form-group">
 		<label>PASSWORD</label>
-		<input name="password" type="password">
+		<input class="form-control input-password" id="hidden-password" name="password" type="password">
 	</div>
 
 	<div>
-		<button>login</button>
+		<button class="btn btn-success">LOGIN</button>
+		<button type="button" class="btn btn-warning">JOIN</button>
 	</div>	
 </form>
+
+<footer th:replace="include/layout :: footer" />
 
 </body>
 </html>

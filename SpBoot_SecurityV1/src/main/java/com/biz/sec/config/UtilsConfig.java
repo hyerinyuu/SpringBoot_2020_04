@@ -1,0 +1,20 @@
+package com.biz.sec.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+@Configuration
+public class UtilsConfig {
+	
+	/*
+	 * spring bena configuration에 작성하던 passwordEncoder를 설정
+	 * <bean></bean>을 대신하는 java 설정
+	 */
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+}

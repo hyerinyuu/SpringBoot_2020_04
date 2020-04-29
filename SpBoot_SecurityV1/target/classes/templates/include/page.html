@@ -1,0 +1,40 @@
+<article class="center">
+<!--  bbs번호가 정수가 아니라는 전제 하 
+	totalPages : pageable class에 이미 만들어져있는 값
+	
+	last=${start + 9 < bbsList.totalPages ? start +9 : bbsList.totalPages 
+	==> 3항 연산자 last page 번호는 start page번호에 9를 더한 10으로 표시하고 totalPages 값이 있으면 10으로, 
+		totalpage값이 0이면 1로 last를 1로 표시하고
+		0이 아니면 totalPage값을 표시하라
+	 
+	데이터의 값이 하나도 없을때는 last 값이 0이 나오므로
+	없을때는 값을 1로 세팅해주는 설정 필요함 
+-->
+	<ul class="pagination justify-content-center"
+		th:with="start=${T(Math)
+				.floor(bbsList.number/10)*10 +1},
+				last=(${start + 9 < bbsList.totalPages ? start +9 : bbsList.totalPages == 0 ? 1 : bbsList.totalPages})"
+	>
+		<li class="page-item">
+			<a th:href="@{/bbs/list(page=1)}" class="page-link">처음</a>
+		</li>
+		
+		<li th:class="${bbsList.first} ? 'page-item disabled' : 'page-item'">
+			<a th:href="@{/bbs/list(page=${bbsList.number})}" class="page-link">&lt;</a>
+		</li>
+	
+		<li th:class="${page == bbsList.number + 1 } ? 'page-item active' : 'page-item'" th:each="page : ${#numbers.sequence(start,last)}">
+			<a class="page-link"  th:href="@{/bbs/list(page=${page})}" th:text="${page}"></a>
+		</li>
+	
+		<li th:class="${bbsList.last} ? 'page-item disabled' : 'page-item'">
+			<a th:href="@{/bbs/list(page=${bbsList.number +2})}" class="page-link">&gt;</a>
+		</li>
+			
+		<li class="page-item">
+			<a th:href="@{/bbs/list(page=${bbsList.totalPages})}" class="page-link">끝</a>
+		</li>
+		
+	</ul>
+
+</article>

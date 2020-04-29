@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<th:block th:include="include/head"/>
+</head>
+<style>
+#m_username {
+	color : red;
+}
+
+</style>
+<script>
+$(function(){
+	$(document).on("blur", "#username", function(){
+		let id = $(this).val()
+		if(id = ""){
+			("#m_username").html("<b>*username은 반드시 입력하셔야합니다*</b>")
+		}
+	})
+})
+
+</script>
+<body>
+	<th:block th:replace="include/layout :: nav" />
+	<h2>회원가입 form</h2>
+	<form th:object="${userVO}" th:action="@{/user/join}"  method="POST">
+		<div class="form-group">
+			<label for="username">USERNAME</label>
+			<input class="form-control" th:field="*{username}" placeholder="Enter username" />
+			<div id="m_username"></div>
+		</div>
+		
+		<div class="form-group">
+			<label for="email">EMAIL</label>
+			<input class="form-control" th:field="*{email}" placeholder="Enter email" />
+		</div>
+	
+		<div class="form-group">
+			<label for="password">PASSWORD</label>
+			<input class="form-control input-password" th:field="*{password}" type="password" placeholder="Enter password" />
+		</div>
+		
+		<div class="form-group">
+			<label for="re_password">CHECK PASSWORD</label>
+			<input class="form-control input-password" name="re_password" id="re_password" type="password" placeholder="check password" />
+		</div>
+		
+		<div>
+			<button class="btn btn-primary">JOIN</button>
+			<button class="btn btn-warning" type="button">forgot ID or Password?</button>
+		</div>
+	</form>
+<th:block th:replace="include/layout :: footer" />
+</body>
+</html>

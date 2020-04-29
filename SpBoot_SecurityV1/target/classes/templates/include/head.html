@@ -1,0 +1,29 @@
+<meta charset="UTF-8">
+<title>나의 Boot Project</title>
+<!--  URL에 th 키워드를 사용하면 rootPath와 관계없이 사용가능하다.-->
+<link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+$(function(){
+	$(document).on("click","a.logout", function(){
+		if(confirm('로그아웃 하시겠습니까?')){
+			let _csrf_token = $(this).data("token")
+			// thyleaf 최신버전에서 사용 가능한 문법
+			// th 키워드를 사용하지 않아도 대괄호 안에 값을 써주면 그 값을 그대로 가져옴
+			// 디자이너가 open with browser하면 오류가 발생할 수 있으니까
+			// 디자이너의 확인이 필요한 경우에는 변수명도 ""로 묶어주기
+			// ex> "[[${_csrf.parameterName}]]" : "[[${_csrf.token}]]"
+			$.post("[[@{/logout}]]", {
+				[[${_csrf.parameterName}]] : "[[${_csrf.token}]]"
+				
+			}, function(){
+				document.location.replace("[[@{/}]]")
+			})
+		}
+	})
+})
+
+</script>

@@ -29,7 +29,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 // javax.persistence로 import 해야함
 // hibernate를 위한 설정
 @Entity(name = "tbl_users")
@@ -46,10 +45,12 @@ public class UserVO implements UserDetails{
 	// mySQL은 strategy = GenerationType를 Identity로 해줘야함
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	// 이 속성이 빠지면 오류가 나는 경우가 발생해서 넣어줌(정확히 어떤 오류인지는 파악 불가)
+	@Column(name = "id", columnDefinition = "bigint")
 	private Long id;
 	
 	// length 기본값은 255개(설정 따로 안하면 기본값임)
-	@Column(unique = true, length = 64)
+	@Column(name="username", columnDefinition = "varchar(64)", unique = true, length = 64)
 	private String username;
 	private String password;
 	
